@@ -1,3 +1,8 @@
+// Tell Underscore.js to use Mustache style templates
+_.templateSettings = {
+  interpolate : /\{\{(.+?)\}\}/g
+};
+
 // Yes, Globals. Deal with it.
 var Statigram = {},
 	Photos;
@@ -24,9 +29,18 @@ Statigram.Photos = Backbone.Collection.extend({
 
 // View - individual Photos
 Statigram.PhotoView = Backbone.View.extend({
-	tagName : 'li',
-	render  : function() {
-		this.$el.append(this.model.get('statigram'));
+	tagName    : 'li',
+	className  : 'photo',
+	initialize : function() {
+		this.template = _.template($('#tpl_photo').html());
+	},
+	render : function() {
+		var data = this.model.attributes;
+		// Null vals show up in form so we need to manually nuke
+		if (data.comment === null) {
+			data.comment = '';
+		}
+		this.$el.append(this.template(this.model.attributes));
 	}
 });
 

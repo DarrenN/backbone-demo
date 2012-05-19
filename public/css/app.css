@@ -3,6 +3,7 @@ body {
 	background: #ccc;
 	font-family: 'Helvetica Neue', Arial, sans-serif;
 	color: #333;
+	font-size: 100%;
 }
 
 #content {
@@ -27,7 +28,7 @@ ul {
 	padding: 0;
 }
 
-ul li {
+ul li.photo {
 	list-style-type: none;
 	display: inline-block;
 	padding: 5px 0;
@@ -39,7 +40,52 @@ ul li {
 	box-shadow: #ccc 0 0 3px;
 }
 
-ul li img {
+ul li.photo img {
 	width: 200px;
 	height: 200px;
+}
+
+.photo-holder h1 {
+	font-size: 10px; font-size: 1.0rem;
+	color: #999;
+	text-align: left;
+	padding: 0 10px;
+	margin: 5px 0;
+}
+
+li.photo:hover .photo-holder h1 {
+	color: #333;
+}
+
+.photo-admin {
+	margin: 0 5px;
+	text-align: right;
+}
+
+.photo-admin li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+}
+
+.photo-admin li a {
+	text-decoration: none;
+	color: #999;
+}
+
+.photo-admin li a:hover {
+	color: #333;
+}
+
+.photo-form {
+	display: none;
+	padding: 0 5px;
+	margin: 4px 0;
+}
+
+.photo-form input[type=text] {
+	width: 100%;
+	font-size: 8px; font-size: .8rem;
+	font-style: italic;
 }

@@ -2,9 +2,11 @@
 <head>
   <title>Arc90 University | Backbone 101</title>
   <link rel="stylesheet" href="css/lib/normalize.css">
+  <link rel="stylesheet" href="css/lib/font-awesome.css">
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
+
   <div id="content">
     <h1>Arc90 University | Backbone 101</h1>
     <div id="photos"></div>
@@ -19,5 +21,21 @@
         Statigram.init(<%= @photos %>);
      });
   </script>
+
+  <!-- Photo Template -->
+  <script type="text/texmplate" id="tpl_photo">
+    <article class="photo-holder">
+      {{ statigram }}
+      <h1>{{ title }}</h1>
+      <form action="/photo/{{ id }}" method="post" accept-charset="utf-8" class="photo-form">
+        <input type="text" name="comment" value="{{ comment }}" placeholder="Comment on photo">
+      </form>
+      <ul class="photo-admin">
+        <li><a href="#info" title="Photo information"><i class="icon-info-sign"></i></a></li>
+        <li><a href="#delete" title="Delete photo"><i class="icon-trash"></i></a></li>
+      </ul>
+    </article>
+  </script>
+  
 </body>
 </html>
