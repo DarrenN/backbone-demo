@@ -1,0 +1,23 @@
+<html>
+<head>
+  <title>Arc90 University | Backbone 101</title>
+  <link rel="stylesheet" href="css/lib/normalize.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div id="content">
+    <h1>Arc90 University | Backbone 101</h1>
+    <div id="photos"></div>
+  </div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script src="js/lib/underscore-min.js"></script>
+  <script src="js/lib/backbone-min.js"></script>
+  <script src="js/app.js"></script>
+  <script>  
+     $(function(){
+        Statigram.init(<%= @photos %>);
+     });
+  </script>
+</body>
+</html>
