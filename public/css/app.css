@@ -25,6 +25,16 @@ h1, h2, h3 {
 	font-size: 16px; font-size: 1.6rem;
 }
 
+#search-form {
+	width: 85%;
+	margin: 0;
+	padding: 0;
+	text-align: right;
+	position: absolute;
+	margin-top: -50px;
+	font-size: 9px; font-size: 0.9rem;
+}
+
 #photos {
 	text-align: center;
 }

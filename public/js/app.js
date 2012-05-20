@@ -19,20 +19,32 @@ Statigram.Photo = Backbone.Model.extend({
 
 // Collection - stores a group of Models
 Statigram.Photos = Backbone.Collection.extend({
-	url : '/photo',
-	model      : Statigram.Photo,
+	url   : '/photo',
+	model : Statigram.Photo,
 
 	initialize : function() {
 		this.view = new Statigram.PhotoSheetView();
 		this.view.collection = this; // Give view a reference to this collection
 		this.on("reset", this.view.render, this); // Pass collection to render()
+	},
+
+	// Find phots by title and fade out non-matches.
+	search : function(term) {
+		var regex = new RegExp(term, "i");
+		this.each(function(photo){
+			if (!regex.test(photo.get('title'))) {
+				photo.view.$el.fadeTo('fast', 0.25);
+			} else {
+				photo.view.$el.fadeTo('fast', 1);
+			}
+		});
 	}
 });
 
 // View - individual Photos. Magick happens here.
 Statigram.PhotoView = Backbone.View.extend({
-	tagName    : 'li',
-	className  : 'photo',
+	tagName   : 'li',
+	className : 'photo',
 
 	initialize : function() {
 		this.template = _.template($('#tpl_photo').html());
@@ -113,6 +125,12 @@ Statigram.PhotoSheetView = Backbone.View.extend({
 		});
 		collection.view.container.prepend(collection.view.$el);
 	}
+});
+
+// Keep an eye on the search form and send queries to Collection
+$('#search-submit').click(function(e){
+	e.preventDefault();
+	Photos.search($('#search').val());
 });
 
 // Launch the app by instantiating the Photos collection and resetting it
