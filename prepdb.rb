@@ -17,7 +17,7 @@ rows = db.execute <<-SQL
   );
 SQL
 
-data = JSON.parse(File.read('../data/mecha.json'))
+data = JSON.parse(File.read('public/data/mecha.json'))
 
 stmt = db.prepare "insert into photos (link, statigram, title, id) values ( ?, ?, ?, ? )"
 data.each do |d|
