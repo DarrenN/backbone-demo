@@ -19,6 +19,12 @@ h1, h2, h3 {
 	font-weight: normal;
 }
 
+#header {
+	margin: 0 0 20px 0;
+	color: #999;
+	font-size: 16px; font-size: 1.6rem;
+}
+
 #photos {
 	text-align: center;
 }
@@ -31,18 +37,17 @@ ul {
 ul li.photo {
 	list-style-type: none;
 	display: inline-block;
-	padding: 5px 0;
+	padding: 0;
 	border: #ddd 1px solid;
 	width: 210px;
-	height: 250px;
+	height: 260px;
 	margin: 20px;
 	text-align: center;
 	box-shadow: #ccc 0 0 3px;
 }
 
 ul li.photo img {
-	width: 200px;
-	height: 200px;
+	width: 100%;
 }
 
 .photo-holder h1 {
@@ -80,12 +85,32 @@ li.photo:hover .photo-holder h1 {
 
 .photo-form {
 	display: none;
-	padding: 0 5px;
-	margin: 4px 0;
+	position: absolute;
+	padding: 5px;
+	margin-top: -256px;
+	width: 200px;
+	height: 200px;
+	background: rgba(220,220,220,0.9);
+	text-align: right;
 }
 
-.photo-form input[type=text] {
+.photo-form label {
+	padding: 0 0 5px 0;
+	font-size: 8px; font-size: 0.8rem;
+	font-weight: bold;
+	text-align: left;
+	display: block;
+	color: #333;
+}
+
+.photo-form textarea {
 	width: 100%;
 	font-size: 8px; font-size: .8rem;
-	font-style: italic;
+	height: 130px;
+	padding: 5px;
+}
+
+.photo-form input[type=submit] {
+	margin-top: 10px;
+	font-size: 8px; font-size: 0.8rem;
 }

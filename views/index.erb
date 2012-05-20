@@ -8,7 +8,7 @@
 <body>
 
   <div id="content">
-    <h1>Arc90 University | Backbone 101</h1>
+    <h1 id="header">Arc90 University | Backbone 101</h1>
     <div id="photos"></div>
   </div>
 
@@ -27,15 +27,17 @@
     <article class="photo-holder">
       {{ statigram }}
       <h1>{{ title }}</h1>
-      <form action="/photo/{{ id }}" method="post" accept-charset="utf-8" class="photo-form">
-        <input type="text" name="comment" value="{{ comment }}" placeholder="Comment on photo">
-      </form>
       <ul class="photo-admin">
-        <li><a href="#info" title="Photo information"><i class="icon-info-sign"></i></a></li>
-        <li><a href="#delete" title="Delete photo"><i class="icon-trash"></i></a></li>
+        <li><a href="#comment" title="Photo information" class="button-comment"><i class="icon-comment"></i></a></li>
+        <li><a href="#delete" title="Delete photo" class="button-delete"><i class="icon-trash"></i></a></li>
       </ul>
+      <form action="/photo/{{ id }}" method="post" accept-charset="utf-8" class="photo-form">
+        <label for="photoComment{{ id }}">Leave a comment</label>
+        <textarea name="comment" id="photoComment{{ id }}">{{ comment }}</textarea>
+        <input type="submit" name="submit" value="Save comment">
+      </form>
     </article>
   </script>
-  
+
 </body>
 </html>
