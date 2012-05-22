@@ -3,9 +3,10 @@ _.templateSettings = {
   interpolate : /\{\{(.+?)\}\}/g
 };
 
-// Yes, Globals. Deal with it.
+// Globals. Deal with it.
 var Statigram = {},
-	Photos;
+	Photos,
+	Workspace;
 
 // Model - we explicitly create a new view for every model
 Statigram.Photo = Backbone.Model.extend({
@@ -123,20 +124,40 @@ Statigram.PhotoSheetView = Backbone.View.extend({
 		collection.models.forEach(function(model){
 			collection.view.$el.append(model.view.$el);
 		});
-		collection.view.container.prepend(collection.view.$el);
+		collection.view.container.prepend(collection.view.$el).animate({ opacity : 1}, 2000);
 	}
 });
 
-// Keep an eye on the search form and send queries to Collection
+// Router - we handle our search feature here with Push State.
+// Queries are passed up to the collection for filtering.
+Statigram.Workspace = Backbone.Router.extend({
+	routes : {
+		"search/" : "search",
+		"search/:query" : "search"
+	},
+
+	search : function(query) {
+		Photos.search(query);
+		$('#search').val(query);
+	}
+});
+
+// Keep an eye on the search form and send queries to the Router.
+// This is breaking the rules if you want to be "pure", but illustrates that this is
+// all just JavaScript. So if you need to quickly attach an event on something you can
+// do so rather easily and still talk to your Backbone-wired app. Ideally you would 
+// make a view for search as part of an Über-view.
 $('#search-submit').click(function(e){
 	e.preventDefault();
-	Photos.search($('#search').val());
+	Workspace.navigate("search/" + $('#search').val(), {trigger: true});
 });
 
 // Launch the app by instantiating the Photos collection and resetting it
 // with the JSON blob from the DB. Photos listens for a reset event and fires
-// a render() on PhotoSheetView
+// a render() on PhotoSheetView. We also start our Router to manage search queries.
 Statigram.init = function(data) {
 	Photos = new Statigram.Photos();
 	Photos.reset(data);
+	Workspace = new Statigram.Workspace();
+	Backbone.history.start({ pushState : true });
 };
