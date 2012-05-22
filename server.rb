@@ -18,11 +18,27 @@ before do
 	content_type 'application/json'
 end
 
-# Return all items in DB to template for bootstrappin'
-get '/' do
+# Stay DRY people, stay dry.
+# We serve index.rb from a few routes, so make it a method
+def serve_index
 	content_type 'text/html' # this is not JSON.
 	@photos = @db.execute2( "select * from photos" ).drop(1).to_json
 	erb :index
+end
+
+# Return all items in DB to template for bootstrappin'
+get '/' do
+	serve_index
+end
+
+# Handle a /search route (client uses pushState)
+get '/search' do
+	serve_index
+end
+
+# Handle a /search route (client uses pushState)
+get '/search/:query' do
+	serve_index
 end
 
 # Returns single photo
