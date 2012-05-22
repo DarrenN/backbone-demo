@@ -37,6 +37,7 @@ h1, h2, h3 {
 
 #photos {
 	text-align: center;
+	opacity: 0;
 }
 
 ul {
