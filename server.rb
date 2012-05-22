@@ -36,6 +36,11 @@ get '/search' do
 	serve_index
 end
 
+# Really? REALLY? I have to brute force the slash?!
+get '/search/' do
+	serve_index
+end
+
 # Handle a /search route (client uses pushState)
 get '/search/:query' do
 	serve_index
