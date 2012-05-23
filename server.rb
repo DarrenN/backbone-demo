@@ -52,7 +52,7 @@ get '/photo/:id' do
 	if row.empty?
 		halt 500, {:response => 'fail'}.to_json
 	end
-	row.to_json
+	row[0].to_json
 end
 
 # Create a photo
@@ -82,4 +82,10 @@ end
 delete '/photo/:id' do
 	@db.execute2("delete from photos where id = ?", params[:id])
 	{:response => 'success'}.to_json
+end
+
+# Delete record
+get '/slides' do
+	content_type 'text/html' # this is not JSON.
+	erb :slides
 end
