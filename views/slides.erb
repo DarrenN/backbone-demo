@@ -162,7 +162,7 @@ photos.add([
     { id : 2 },
     { id : 3 }
 ]);
-log('#log3', photos.length);
+log('#log3', [photos.length, photos.url]);
             </code>
         </pre>
     </div>
@@ -197,6 +197,11 @@ log('#log3', photos.length);
         hljs.initHighlightingOnLoad();
 
         var log = function(el, msg) {
+            if (typeof msg === 'object') {
+                if (msg.constructor.toString().indexOf("Array") !== -1) {
+                    msg = msg.join(", ");
+                }
+            }
             $(el).append(msg);
         }
 
