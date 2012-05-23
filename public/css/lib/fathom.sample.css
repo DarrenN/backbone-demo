@@ -1,0 +1,294 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+input:focus {
+	outline: 0;
+}
+
+/* Presentation styles 
+font-weight: 400;
+font-weight: 700;
+font-family: 'Droid Sans', sans-serif;
+font-family: 'Droid Sans Mono', sans-serif;
+
+*/
+
+body {
+	background-color: #ccc;
+	font-family: 'Droid Sans', sans-serif;
+	font-weight: 400;
+	color: #333;
+}
+
+#presentation {
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+div.slide {
+	box-shadow: #999 0px 0px 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	-moz-background-clip: padding;
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
+	background: #eee;
+	display: inline-block;
+	height: 768px;
+	padding: 20px;
+	position: relative;
+	vertical-align: top;
+	width: 1024px;
+}
+	div.inactiveslide {
+		opacity: 0.4;
+	}
+	div.activeslide {
+		opacity: 1;
+	}
+
+blockquote {
+	margin: 20px auto;
+	width: 70%;
+}
+
+blockquote h1 {
+	font-size: 1.2rem;
+	font-weight: 700;
+	margin: 0 0 20px 0;
+	padding: 0 0 15px 0;
+	border-bottom: #ccc 1px solid;
+}
+
+blockquote p {
+	font-size: 2.4154rem;
+	line-height: 150%;
+}
+
+blockquote p:before {
+	content: "“";
+	font-size: 3.6154rem;
+	color: #999;
+	position: absolute;
+	margin-top: 5px;
+	margin-left: -1.6rem;
+}
+
+blockquote p:after {
+	content: "”";
+	font-size: 3.6154rem;
+	color: #999;
+	position: absolute;
+	margin-top: 5px;
+
+}
+
+
+a {
+	color: #0072b4;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #0072b4;
+	text-decoration: underline;
+}
+
+strong {
+	font-weight: 700;
+	color: #000;
+}
+
+em {
+	color: #999;
+}
+
+.list h1 {
+	font-size: 2.6rem;
+	font-weight: 700;
+	margin: 40px auto 20px auto;
+	padding: 0 0 15px 0;
+	border-bottom: #ccc 1px solid;
+	width: 80%;
+}
+
+.list h1:last-of-type {
+	margin-top: 80px;
+}
+
+.list ul {
+	margin: 20px auto 20px auto;
+	width: 80%;
+}
+
+.list li {
+	font-size: 1.8rem;
+	list-style-type: circle;
+	margin: 20px 0 20px 20px;
+	line-height: 140%;
+}
+
+cite {
+	display: block;
+	text-align: left;
+	font-size: 1rem;
+	margin: 20px auto;
+	width: 70%;
+}
+
+code {
+	display: block;
+	font-family: 'Droid Sans Mono', 'Consolas', 'Menlo', sans-serif;
+	margin: 20px auto 20px auto;
+	width: 80%;
+	padding: 0 40px !important;
+	border-radius: 10px;
+	font-size: 1rem;
+	line-height: 140%;
+	overflow: auto;
+}
+
+.code h1,
+.code p {
+	margin: 0 auto;
+	width: 87%;
+}
+
+.code h1 {
+	font-size: 2.4rem;
+	margin-bottom: 10px;
+	margin-top: 20px;
+}
+
+.code p {
+	font-size: 1.2rem;
+	line-height: 140%;
+}
+
+.run {
+	margin: 0 auto;
+	width: 87%;
+}
+
+.run button {
+	font-size: 1.2rem;
+	padding: 8px;
+	border-radius: 10px;
+}
+
+#title {
+	text-align: center;
+}
+
+#title div {
+	margin-top: 50px;
+}
+
+#title h1 {
+	font-size: 1.0rem;
+	margin-top: 60px;
+	color: #999;
+}
+
+#title h2 {
+	font-size: 4.2308rem;
+	text-transform: uppercase;
+}
+
+#title h3 {
+	margin: 30px 0;
+	color: #999;
+	font-size: 1.6154rem;
+}
+
+#title h4 {
+	margin: 40px 0;
+	color: #ccc;
+	font-size: 2.6154rem;
+}
+
+#arc90-logo {
+	margin-top: 40px;
+}
+
+.breaker {
+	text-align: center;
+}
+
+.breaker h1 {
+	font-size: 6.8462rem;
+	color: #002940;
+	font-weight: 700;
+	margin-top: 250px;
+	letter-spacing: -0.5rem;
+}
+
+.breaker h2 {
+	font-size: 4.2308rem;
+	color: #999;
+	position: absolute;
+	margin-top: 60px;
+	width: 100%;
+	text-align: center;
+}
+
+/* iPad */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+	div.inactiveslide {
+		opacity: 1;
+	}
+}
+
+/* iPhone */
+@media only screen and (max-device-width: 480px) {
+	div.inactiveslide {
+		opacity: 1;
+	}
+}

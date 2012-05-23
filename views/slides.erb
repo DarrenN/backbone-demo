@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Arc90 University | BackboneJS 101</title>
+    <link rel="stylesheet" href="/css/lib/fathom.sample.css">
+    <link rel="stylesheet" href="/css/lib/ir_black.css">
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+    <script src="/js/lib/jquery-1.7.2.min.js"></script>
+    <script src="/js/lib/fathom.min.js"></script>
+    <script src="/js/lib/jquery.noisy.min.js"></script>
+    <script src="/js/lib/highlight.pack.js"></script>
+    <script src="/js/lib/underscore-min.js"></script>
+    <script src="/js/lib/backbone-min.js"></script>
+</head>
+<body>
+
+<div id="presentation">
+    
+    <div id="title" class="slide">
+        <div>
+            <img src="/img/backbone-300x300.png" alt="">
+            <h2>Backbone.js</h2>
+        </div>
+        <h3>A gentle introduction to a JavaScript library</h3>
+        <h4>≈</h4>
+        <h1>Arc90 University | May 24<sub>th</sup>, 2012</h1>
+        <img src="/img/arc90_logo.png" width="118" height="46" alt="arc90" id="arc90-logo">
+    </div>
+
+    <div class="slide breaker">
+        <h1>What is it?</h1>
+    </div>
+
+    <div class="slide">
+        <blockquote style="margin-top: 80px">
+            <h1>Official definition</h1>
+            <p>Backbone.js gives structure to web applications by providing <strong>models</strong> with key-value binding and custom events, <strong>collections</strong> with a rich API of enumerable functions, <strong>views</strong> with declarative event handling, and connects it all to your existing API over a RESTful JSON interface.</p>
+        </blockquote>
+        <cite>- <a href="http://documentcloud.github.com/backbone/">http://documentcloud.github.com/backbone/</a></cite>
+    </div>
+
+    <div class="slide breaker">
+        <h2>OMG</h2>
+        <h1>It brings order to <br />the chaos</h1>
+    </div>
+
+    <div class="slide list">
+        <h1>What is it not?</h1>
+        <ul>
+            <li>A big application framework like Cappucino, Sencha or SproutCore.</li>
+            <li>The solution to every problem.</li>
+        </ul>
+
+        <h1>What are it's wins?</h1>
+        <ul>
+            <li>It's very light. <em>(5.6kb, Packed and gzipped)</em></li>
+            <li>It's very flexible, pick and choose what parts you want.</li>
+            <li>It's just JavaScript, you can completely reconfigure and extend it on the fly.</li>
+        </ul>
+    </div>
+
+    <div class="slide breaker">
+        <h1>Enough Talk.<br />Let's see some code.</h1>
+    </div>
+
+    <div class="slide code">
+        <h1>Models</h1>
+        <p>Lets make a simple model to store our a photo</p>
+
+        <pre class="runnable">
+            <code class="javascript">
+var Statigram = {};
+
+Statigram.Photo = Backbone.Model.extend({
+    initialize : function() {
+        alert(this.id);
+    }
+});
+
+// Create a new Photo model with an id = 1
+var photo = new Statigram.Photo({ id : 1 });
+            </code>
+        </pre>
+    </div>
+
+    <div class="slide code">
+        <h1>Models</h1>
+        <p>Now let's sync the model to the server and retrieve the record for Photo.id = 1</p>
+
+        <pre class="runnable">
+            <code class="javascript">
+var Statigram = {};
+
+Statigram.Photo = Backbone.Model.extend({
+
+    // Set a base URL for the model to hit. Backbone will create the url:
+    // Request URL:http://127.0.0.1:4567/photo/1
+    // Request Method:GET
+    urlRoot : 'photo',
+
+    initialize : function() {
+        // fetch() uses Backbone.Sync to hit the server and
+        // load the model with the returned JSON
+        this.fetch({
+            success : function(model, response) {
+                alert(model.get('title')); // Builtin getters
+            }
+        });
+    }
+});
+
+var photo = new Statigram.Photo({ id : 1 });
+            </code>
+        </pre>
+    </div>
+
+        <div class="slide code">
+        <h1>Models</h1>
+        <p>Now let's make a change and persist it to the DB</p>
+
+        <pre class="runnable">
+            <code class="javascript">
+var Statigram = {};
+
+Statigram.Photo = Backbone.Model.extend({
+    urlRoot : 'photo',
+
+    initialize : function() {
+        // After saving a sync event is fired to get the model up to date
+        // so we'll watch for that event using on()
+        this.on("sync", function(model, response){
+            alert(model.get('title'));
+        })
+    }
+});
+
+var photo = new Statigram.Photo({ id : 1 });
+photo.save({'title' : 'Jo Bob'});
+            </code>
+        </pre>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function(){
+
+        $("#presentation").fathom({
+            scrollLength : 300
+        });
+
+        $('body').noisy({
+            intensity: 1, 
+            size: 400, 
+            opacity: 0.08,
+            monochrome: false
+        });
+
+
+        $('.runnable').each(function() {
+            var code = $(this).find('code');
+            var button = '<div class="run" title="Run"><button>Run Code</button></div>';
+            $(button).insertAfter($(this)).bind('click', function(){
+              eval(code.text());    
+            });
+        });
+
+        hljs.tabReplace = '    ';
+        hljs.initHighlightingOnLoad();
+
+    });
+</script>
+</body>
+</html>
