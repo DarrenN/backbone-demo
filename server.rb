@@ -46,6 +46,11 @@ get '/search/:query' do
 	serve_index
 end
 
+# Send the whole shebang down
+get '/photos' do
+	@photos = @db.execute2( "select * from photos" ).drop(1).to_json
+end
+
 # Returns single photo
 get '/photo/:id' do 
 	row = @db.execute2("select * from photos where id=?", params[:id]).drop(1)

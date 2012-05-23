@@ -151,7 +151,7 @@ Statigram.Photo = Backbone.Model.extend({}); // Model
 
 // Make a Collection object
 Statigram.Photos = Backbone.Collection.extend({
-    url   : '/photo',
+    url   : '/photos',
     model : Statigram.Photo // Explicitly tell it what model to use
 });
 
@@ -162,9 +162,119 @@ photos.add([
     { id : 2 },
     { id : 3 }
 ]);
-log('#log3', [photos.length, photos.url]);
+log('#log3', [photos.length, JSON.stringify(photos)]);
             </code>
         </pre>
+    </div>
+
+    <div class="slide code">
+        <h1>Collections</h1>
+        <p>Use fetch() to populate a Collection from the server. In this case we'll get the whole DB back (12 rows) loaded into models.</p>
+
+        <pre class="runnable">
+            <code class="javascript">
+var Statigram = {};
+Statigram.Photo = Backbone.Model.extend({}); // Model
+
+// Make a Collection object
+Statigram.Photos = Backbone.Collection.extend({
+    url   : '/photos',
+    model : Statigram.Photo // Explicitly tell it what model to use
+});
+
+// Create a collections and add some models
+var photos = new Statigram.Photos();
+photos.fetch({
+    success : function() {
+        // Notice .pluck() - a nice bit of Underscore.js to help manage models
+        log('#log4', [photos.length, JSON.stringify(photos.pluck('title'))]);
+    }
+});
+            </code>
+        </pre>
+    </div>
+
+    <div class="slide code">
+        <h1>Collections: Manipulation</h1>
+        <p>Like pluck() there are a bunch of available functions you can use to operate on your collection of models.</p>
+
+        <pre class="runnable">
+            <code class="javascript">
+var Statigram = {};
+Statigram.Photo = Backbone.Model.extend({});
+Statigram.Photos = Backbone.Collection.extend({
+    url   : '/photos', model : Statigram.Photo 
+});
+var photos = new Statigram.Photos();
+photos.fetch({
+    success : function() {
+        log('#log5', [
+            // Get a model from collection by Id
+            photos.get(3).get('title'),
+
+            // Get models that meet a criteria and return array
+            photos.where({title : 'Galaxy California'})[0].get('title'), 
+            
+            // Pop - pop last model off stack and return it
+            photos.pop().get('title')
+            ]);  
+    }
+});
+            </code>
+        </pre>
+    </div>
+
+    <div class="slide code">
+        <h1>Views</h1>
+        <p>Now that we have data, we need to display it in a meaningful manner. Views will auto-assemble DOM elements for you based on the information you give it.</p>
+
+        <pre class="runnable">
+            <code class="javascript">
+var Statigram = {};
+Statigram.PhotoView = Backbone.View.extend({
+    el : 'li', // We want to make list elements
+    className : 'photo_view', // we would like this className
+    render : function() {
+        // note the magic $el - this is el wrapped in jQuery
+        this.$el.html('A list element of striling reputation.');
+        log('#log6', this.el);
+    }
+});
+var photo_view = new Statigram.PhotoView();
+photo_view.render();
+            </code>
+        </pre>
+        <ul id="test_list"></ul>
+    </div>
+
+    <div class="slide code">
+        <h1>Views</h1>
+        <p>Use your collection and models to load data into your views.</p>
+
+        <pre class="runnable">
+            <code class="javascript">
+var Statigram = {};
+Statigram.Photo = Backbone.Model.extend({
+    initialize : function() {
+        this.view = new Statigram.PhotoView({ model : this });
+        this.view.render();
+    }
+}); // Model
+Statigram.Photos = Backbone.Collection.extend({
+    url   : '/photos', model : Statigram.Photo
+});
+Statigram.PhotoView = Backbone.View.extend({
+    el : 'li',
+    className : 'photo_view',
+    render : function() {
+        this.$el.text(this.options.model.get('title'));
+        log('#log7', this.el);
+    }
+});
+var photos = new Statigram.Photos([{ id : 1, title : 'Manhattan' }]);
+            </code>
+        </pre>
+        <ul id="test_list"></ul>
     </div>
 
 </div>
