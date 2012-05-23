@@ -127,7 +127,7 @@ Statigram.Photo = Backbone.Model.extend({
 
     initialize : function() {
         // After saving a sync event is fired to get the model up to date
-        // so we'll watch for that event using on()
+        // so we'll watch for that event and act on it
         this.on("sync", function(model, response){
             alert(model.get('title'));
         })
@@ -136,6 +136,33 @@ Statigram.Photo = Backbone.Model.extend({
 
 var photo = new Statigram.Photo({ id : 1 });
 photo.save({'title' : 'Jo Bob'});
+            </code>
+        </pre>
+    </div>
+
+    <div class="slide code">
+        <h1>Collections</h1>
+        <p>Manage a bunch of models using Underscore.js and other goodness</p>
+
+        <pre class="runnable">
+            <code class="javascript">
+var Statigram = {};
+Statigram.Photo = Backbone.Model.extend({}); // Model
+
+// Make a Collection object
+Statigram.Photos = Backbone.Collection.extend({
+    url   : '/photo',
+    model : Statigram.Photo // Explicitly tell it what model to use
+});
+
+// Create a collections and add some models
+var photos = new Statigram.Photos();
+photos.add([
+    { id : 1 },
+    { id : 2 },
+    { id : 3 }
+]);
+alert(photos.length);
             </code>
         </pre>
     </div>
