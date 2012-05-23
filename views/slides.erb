@@ -73,7 +73,7 @@ var Statigram = {};
 
 Statigram.Photo = Backbone.Model.extend({
     initialize : function() {
-        alert(this.id);
+        log('#log0', this.id);
     }
 });
 
@@ -94,8 +94,7 @@ var Statigram = {};
 Statigram.Photo = Backbone.Model.extend({
 
     // Set a base URL for the model to hit. Backbone will create the url:
-    // Request URL:http://127.0.0.1:4567/photo/1
-    // Request Method:GET
+    // Request: GET http://127.0.0.1:4567/photo/1
     urlRoot : 'photo',
 
     initialize : function() {
@@ -103,7 +102,8 @@ Statigram.Photo = Backbone.Model.extend({
         // load the model with the returned JSON
         this.fetch({
             success : function(model, response) {
-                alert(model.get('title')); // Builtin getters
+                // Use get() to grab model attributes
+                log('#log1', model.get('title') + ' : ' + model.get('link'));
             }
         });
     }
@@ -129,7 +129,7 @@ Statigram.Photo = Backbone.Model.extend({
         // After saving a sync event is fired to get the model up to date
         // so we'll watch for that event and act on it
         this.on("sync", function(model, response){
-            alert(model.get('title'));
+            log('#log2', model.get('title'));
         })
     }
 });
@@ -162,7 +162,7 @@ photos.add([
     { id : 2 },
     { id : 3 }
 ]);
-alert(photos.length);
+log('#log3', photos.length);
             </code>
         </pre>
     </div>
@@ -172,7 +172,8 @@ alert(photos.length);
     $(document).ready(function(){
 
         $("#presentation").fathom({
-            scrollLength : 300
+            scrollLength : 300,
+            margin : 200
         });
 
         $('body').noisy({
@@ -182,17 +183,22 @@ alert(photos.length);
             monochrome: false
         });
 
-
+        var x = 0;
         $('.runnable').each(function() {
             var code = $(this).find('code');
-            var button = '<div class="run" title="Run"><button>Run Code</button></div>';
+            var button = '<div class="run" title="Run"><button>Run Code</button><div id="log' + x + '" class="log"><span>Log ' + x +':</span> </div></div>';
             $(button).insertAfter($(this)).bind('click', function(){
               eval(code.text());    
             });
+            x++;
         });
 
         hljs.tabReplace = '    ';
         hljs.initHighlightingOnLoad();
+
+        var log = function(el, msg) {
+            $(el).append(msg);
+        }
 
     });
 </script>
