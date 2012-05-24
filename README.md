@@ -26,4 +26,8 @@ The DB is part of the Repo, so if you have SQLite3 installed you can just go. Th
 
 And then point your browser to `http://127.0.0.1:4567`
 
-**BOOM!**
+:fist: **BOOM!** :fist:
+
+### View the interactive slide deck
+
+Point your browser to `http://127.0.0.1:4567/slides`
