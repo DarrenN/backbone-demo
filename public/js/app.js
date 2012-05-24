@@ -29,7 +29,7 @@ Statigram.Photos = Backbone.Collection.extend({
 		this.on("reset", this.view.render, this); // Pass collection to render()
 	},
 
-	// Find phots by title and fade out non-matches.
+	// Find photos by title using a RegEx and fade out non-matches.
 	search : function(term) {
 		var regex = new RegExp(term, "i");
 		this.each(function(photo){
@@ -47,10 +47,12 @@ Statigram.PhotoView = Backbone.View.extend({
 	tagName   : 'li',
 	className : 'photo',
 
+	// Grab the template contents and prepare for rendering with _.template() 
 	initialize : function() {
 		this.template = _.template($('#tpl_photo').html());
 	},
 
+	// Instert the compiled template into the <li> tag
 	render : function() {
 		var data = this.model.attributes;
 
@@ -81,6 +83,7 @@ Statigram.PhotoView = Backbone.View.extend({
 		}
 	},
 
+	// On a successful delete fade the view out
 	delete_photo : function(e) {
 		e.preventDefault();
 		this.model.destroy({
@@ -113,7 +116,9 @@ Statigram.PhotoView = Backbone.View.extend({
 	}
 });
 
-// View - container for individual PhotoViews
+// View - container for individual PhotoViews. I do this so I can manipulate
+// the entire PhotoSheet if necessary, such as fading the whole thing in 
+// or out as needed.
 Statigram.PhotoSheetView = Backbone.View.extend({
 	tagName : 'ul',
 	initialize : function () {
@@ -140,8 +145,8 @@ Statigram.Workspace = Backbone.Router.extend({
 	},
 
 	search : function(query) {
-		Photos.search(query);
-		$('#search').val(query);
+		Photos.search(query); // Search the collection for query
+		$('#search').val(query); // make sure the search form has the query term
 	}
 });
 
