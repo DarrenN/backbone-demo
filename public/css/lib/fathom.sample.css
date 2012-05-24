@@ -163,6 +163,7 @@ em {
 
 .iframe h1 span {
 	font-weight: 400;
+	font-size: 1.6rem;
 	color: #999;
 }
 
@@ -358,6 +359,11 @@ code::-webkit-selection {
 	margin-top: 60px;
 	width: 100%;
 	text-align: center;
+}
+
+.breaker h3 {
+	font-size: 2.4rem;
+	margin: 40px 0 0 0;
 }
 
 

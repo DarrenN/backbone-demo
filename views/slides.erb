@@ -27,24 +27,18 @@
         <img src="/img/arc90_logo.png" width="118" height="46" alt="arc90" id="arc90-logo">
     </div>
 
-<!--     <div class="slide">
-        <blockquote style="margin-top: 80px">
-            <h1>Official definition</h1>
-            <p>Backbone.js gives structure to web applications by providing <strong>models</strong> with key-value binding and custom events, <strong>collections</strong> with a rich API of enumerable functions, <strong>views</strong> with declarative event handling, and connects it all to your existing API over a RESTful JSON interface.</p>
-        </blockquote>
-        <cite>- <a href="http://documentcloud.github.com/backbone/">http://documentcloud.github.com/backbone/</a></cite>
-    </div> -->
 
     <div class="slide breaker">
         <h1>What is Backbone.js?</h1>
+        <h3><a href="http://documentcloud.github.com/backbone/">http://documentcloud.github.com/backbone/</a></h3>
     </div>
 
     <div class="slide list">
         <h1>What is Backbone.js?</h1>
         <ul>
             <li>Backbone provides a way to structure and organize your code, separating responsibilities in to easily recognizable pieces.</li>
-            <li>It is very light <em>(5.6kb, Packed &amp; gzipped)</em>.</li>
             <li>It is very flexible, pick and choose what parts you want. It is a <strong>library</strong>, not a framework.</li>
+            <li>It is very light <em>(5.6kb, Packed &amp; gzipped)</em>.</li>
             <li>It <strong>requires</strong> jQuery || Zepto as well as Underscore.js</li>
             <li>You have to do some hacks to make it play nice with Require.js <em>(more on this later)</em>.</li>
             <li>Get a second opinion on Herding Code : <a href="http://herdingcode.com/?p=390">http://herdingcode.com/?p=390</a>
@@ -61,6 +55,7 @@
 
     <div class="slide breaker">
         <h1>Enough Talk.<br />Let's see some code.</h1>
+        <h3>(We'll take a quick tour of the basics first)</h3>
     </div>
 
     <div class="slide code">
@@ -76,7 +71,7 @@ var Statigram = {};
 // Define a Model
 Statigram.Photo = Backbone.Model.extend({
     initialize : function() {
-        log('#log0', this.id);
+        log(this.id);
     }
 });
 
@@ -106,7 +101,7 @@ Statigram.Photo = Backbone.Model.extend({
         this.fetch({
             success : function(model, response) {
                 // Use get() to grab model attributes
-                log('#log1', model.get('title') + ' : ' + model.get('link'));
+                log(model.get('title') + ' : ' + model.get('link'));
             }
         });
     }
@@ -132,7 +127,7 @@ Statigram.Photo = Backbone.Model.extend({
         // After saving a sync event is fired to get the model up to date
         // so we'll watch for that event and act on it
         this.on("sync", function(model, response){
-            log('#log2', model.get('title'));
+            log(model.get('title'));
         })
     }
 });
@@ -165,7 +160,7 @@ photos.add([
     { id : 2 },
     { id : 3 }
 ]);
-log('#log3', [photos.length, JSON.stringify(photos)]);
+log([photos.length, JSON.stringify(photos)]);
             </code>
         </pre>
     </div>
@@ -190,7 +185,7 @@ var photos = new Statigram.Photos();
 photos.fetch({
     success : function() {
         // Notice .pluck() - a nice bit of Underscore.js to help manage models
-        log('#log4', [photos.length, JSON.stringify(photos.pluck('title'))]);
+        log([photos.length, JSON.stringify(photos.pluck('title'))]);
     }
 });
             </code>
@@ -210,9 +205,9 @@ var photos = new Statigram.Photos();
 photos.fetch({
     success : function() {
         // Iterate the collection with .each()
-        photos.each(function(model){ log('#log5', ' Id: ' + model.id) });
+        photos.each(function(model){ log(' Id: ' + model.id) });
 
-        log('#log5', [
+        log([
             // Get a model from collection by Id
             photos.get(3).get('title'),
 
@@ -244,8 +239,7 @@ Statigram.PhotoView = Backbone.View.extend({
         // 
         // $el - this is `this.el` wrapped in jQuery
         this.$el.html('A list element of stirling reputation.');
-
-        log('#log6', this.el);
+        log(this.el);
     }
 });
 var photo_view = new Statigram.PhotoView();
@@ -308,7 +302,7 @@ Statigram.PhotoView = Backbone.View.extend({
     },
     red : function(e) { 
         this.$el.css({ color : '#f00' });
-        log('#log8', " ID:" + this.$el.attr('id')); 
+        log(" ID:" + this.$el.attr('id')); 
     }
 });
 photos = new Statigram.Photos();
@@ -325,18 +319,22 @@ photos.fetch(); // Load models from server and render
 <script>
     $(document).ready(function(){
 
+        // Kick off Fathom.js slideshow
         $("#presentation").fathom({
             scrollLength : 300,
             margin : 200
         });
 
+        // Add some noise to the background
         $('body').noisy({
             intensity: 1, 
-            size: 400, 
+            size: 200, 
             opacity: 0.08,
             monochrome: false
         });
 
+        // Attach a button and .log element to every code block.
+        // Clicking the button will eval() and run the JS contents.
         var x = 0;
         $('.runnable').each(function() {
             var code = $(this).find('code');
@@ -347,16 +345,18 @@ photos.fetch(); // Load models from server and render
             x++;
         });
 
+        // Kick off syntax highlighing
         hljs.tabReplace = '    ';
         hljs.initHighlightingOnLoad();
 
-        var log = function(el, msg) {
+        // Post message to the .log element in the active slide
+        var log = function(msg) {
             if (typeof msg === 'object') {
                 if (msg.constructor.toString().indexOf("Array") !== -1) {
                     msg = msg.join(", ");
                 }
             }
-            $(el).append(msg);
+            $('.activeslide').find('.log').append(msg);
         }
 
     });
