@@ -53,19 +53,21 @@ Statigram.PhotoView = Backbone.View.extend({
 
 	render : function() {
 		var data = this.model.attributes;
+
 		// Null vals show up in form so we need to manually nuke. *boom*
 		if (data.comment === null) {
 			data.comment = '';
 		}
-		this.$el.append(this.template(this.model.attributes));
+		this.$el.append(this.template(data));
 	},
 
 	events : {
-		"click .button-comment" : "toggle_form",
-		"click .button-delete"  : "delete_photo",
-		"click input[type=submit]" : "submit_comment"
+		"click .button-comment" 	: "toggle_form",
+		"click .button-delete"  	: "delete_photo",
+		"click input[type=submit]" 	: "submit_comment"
 	},
 
+	// Fade-in/out the Comment form on each photo view
 	toggle_form : function(e) {
 		e.preventDefault();
 		if (this.options.form_state !== 1) {
@@ -93,6 +95,7 @@ Statigram.PhotoView = Backbone.View.extend({
 		});
 	},
 
+	// Send comment to server and change form label color depending on response
 	submit_comment : function(e) {
 		e.preventDefault();
 		this.model.save({comment : this.$('textarea').val()},{
