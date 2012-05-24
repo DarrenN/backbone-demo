@@ -27,36 +27,36 @@
         <img src="/img/arc90_logo.png" width="118" height="46" alt="arc90" id="arc90-logo">
     </div>
 
-    <div class="slide breaker">
-        <h1>What is it?</h1>
-    </div>
-
-    <div class="slide">
+<!--     <div class="slide">
         <blockquote style="margin-top: 80px">
             <h1>Official definition</h1>
             <p>Backbone.js gives structure to web applications by providing <strong>models</strong> with key-value binding and custom events, <strong>collections</strong> with a rich API of enumerable functions, <strong>views</strong> with declarative event handling, and connects it all to your existing API over a RESTful JSON interface.</p>
         </blockquote>
         <cite>- <a href="http://documentcloud.github.com/backbone/">http://documentcloud.github.com/backbone/</a></cite>
-    </div>
+    </div> -->
 
     <div class="slide breaker">
-        <h2>OMG</h2>
-        <h1>It brings order to <br />the chaos</h1>
+        <h1>What is Backbone.js?</h1>
     </div>
 
     <div class="slide list">
-        <h1>What is it not?</h1>
+        <h1>What is Backbone.js?</h1>
         <ul>
-            <li>A big application framework like Cappucino, Sencha or SproutCore.</li>
-            <li>The solution to every problem.</li>
+            <li>Backbone provides a way to structure and organize your code, separating responsibilities in to easily recognizable pieces.</li>
+            <li>It is very light <em>(5.6kb, Packed &amp; gzipped)</em>.</li>
+            <li>It is very flexible, pick and choose what parts you want. It is a <strong>library</strong>, not a framework.</li>
+            <li>It <strong>requires</strong> jQuery || Zepto as well as Underscore.js</li>
+            <li>You have to do some hacks to make it play nice with Require.js <em>(more on this later)</em>.</li>
+            <li>Get a second opinion on Herding Code : <a href="http://herdingcode.com/?p=390">http://herdingcode.com/?p=390</a>
         </ul>
+    </div>
 
-        <h1>What are it's wins?</h1>
-        <ul>
-            <li>It's very light. <em>(5.6kb, Packed and gzipped)</em></li>
-            <li>It's very flexible, pick and choose what parts you want.</li>
-            <li>It's just JavaScript, you can completely reconfigure and extend it on the fly.</li>
-        </ul>
+    <div class="slide iframe">
+        <h1>
+            We're going to look at a simple photo app backed by a local server &amp; DB.<br />
+            <span>Fork it on GitHub: <a href="https://github.com/DarrenN/backbone-demo">https://github.com/DarrenN/backbone-demo</a><span>
+        </h1>
+        <iframe src="http://127.0.0.1:4567"></iframe>
     </div>
 
     <div class="slide breaker">
@@ -69,8 +69,11 @@
 
         <pre class="runnable">
             <code class="javascript">
+// The app uses a set of photos taken from my Instagram feed via Statigram,
+// hence the namespace
 var Statigram = {};
 
+// Define a Model
 Statigram.Photo = Backbone.Model.extend({
     initialize : function() {
         log('#log0', this.id);
@@ -202,12 +205,13 @@ photos.fetch({
             <code class="javascript">
 var Statigram = {};
 Statigram.Photo = Backbone.Model.extend({});
-Statigram.Photos = Backbone.Collection.extend({
-    url   : '/photos', model : Statigram.Photo 
-});
+Statigram.Photos = Backbone.Collection.extend({ url   : '/photos', model : Statigram.Photo  });
 var photos = new Statigram.Photos();
 photos.fetch({
     success : function() {
+        // Iterate the collection with .each()
+        photos.each(function(model){ log('#log5', ' Id: ' + model.id) });
+
         log('#log5', [
             // Get a model from collection by Id
             photos.get(3).get('title'),
@@ -232,11 +236,15 @@ photos.fetch({
             <code class="javascript">
 var Statigram = {};
 Statigram.PhotoView = Backbone.View.extend({
-    el : 'li', // We want to make list elements
+    tagName   : 'li', // We want to make list elements
     className : 'photo_view', // we would like this className
-    render : function() {
-        // note the magic $el - this is el wrapped in jQuery
-        this.$el.html('A list element of striling reputation.');
+    render    : function() {
+        // The view generates `this.el` out of the tagName & className to make:
+        // &lt;li class="photo_view"&gt;&lt;/li&gt;
+        // 
+        // $el - this is `this.el` wrapped in jQuery
+        this.$el.html('A list element of stirling reputation.');
+
         log('#log6', this.el);
     }
 });
@@ -244,37 +252,73 @@ var photo_view = new Statigram.PhotoView();
 photo_view.render();
             </code>
         </pre>
-        <ul id="test_list"></ul>
     </div>
 
     <div class="slide code">
         <h1>Views</h1>
         <p>Use your collection and models to load data into your views.</p>
 
-        <pre class="runnable">
+        <ul id="test_list" class="test_list"></ul>
+        <pre class="runnable half">
             <code class="javascript">
 var Statigram = {};
 Statigram.Photo = Backbone.Model.extend({
     initialize : function() {
-        this.view = new Statigram.PhotoView({ model : this });
+        this.view = new Statigram.PhotoView({ model : this, id : this.id });
         this.view.render();
     }
-}); // Model
+});
 Statigram.Photos = Backbone.Collection.extend({
-    url   : '/photos', model : Statigram.Photo
+    url : '/photos', model : Statigram.Photo
 });
 Statigram.PhotoView = Backbone.View.extend({
-    el : 'li',
-    className : 'photo_view',
-    render : function() {
-        this.$el.text(this.options.model.get('title'));
-        log('#log7', this.el);
+    tagName   : 'li',
+    className : 'photoview',
+    render    : function() {
+        $('#test_list').append(this.$el.text(this.options.model.get('title')));
     }
 });
-var photos = new Statigram.Photos([{ id : 1, title : 'Manhattan' }]);
+photos = new Statigram.Photos();
+photos.fetch(); // Load models from server and render
             </code>
         </pre>
-        <ul id="test_list"></ul>
+    </div>
+
+    <div class="slide code">
+        <h1>Views</h1>
+        <p>Attach events to your views to keep your code organized.</p>
+
+        <ul id="test_list2" class="test_list"></ul>
+        <pre class="runnable half">
+            <code class="javascript">
+var Statigram = {};
+Statigram.Photo = Backbone.Model.extend({
+    initialize : function() { 
+        this.view = new Statigram.PhotoView({ model : this, id : this.id }); 
+        this.view.render(); 
+    }
+});
+Statigram.Photos = Backbone.Collection.extend({ url : '/photos', model : Statigram.Photo });
+Statigram.PhotoView = Backbone.View.extend({
+    tagName   : 'li',
+    className : 'photoview',
+    render    : function() { $('#test_list2').append(this.$el.html(this.options.model.get('title'))); },
+    events    : {
+        "click" : "red"
+    },
+    red : function(e) { 
+        this.$el.css({ color : '#f00' });
+        log('#log8', " ID:" + this.$el.attr('id')); 
+    }
+});
+photos = new Statigram.Photos();
+photos.fetch(); // Load models from server and render
+            </code>
+        </pre>
+    </div>
+
+    <div class="slide breaker">
+        <h1>Hopefully that <br />made sense.</h1>
     </div>
 
 </div>
@@ -296,7 +340,7 @@ var photos = new Statigram.Photos([{ id : 1, title : 'Manhattan' }]);
         var x = 0;
         $('.runnable').each(function() {
             var code = $(this).find('code');
-            var button = '<div class="run" title="Run"><button>Run Code</button><div id="log' + x + '" class="log"><span>Log ' + x +':</span> </div></div>';
+            var button = '<div class="run" title="Run"><button>Run Code</button><div id="log' + x + '" class="log"></div></div>';
             $(button).insertAfter($(this)).bind('click', function(){
               eval(code.text());    
             });

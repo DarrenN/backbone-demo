@@ -150,6 +150,28 @@ em {
 	color: #999;
 }
 
+.iframe h1 {
+	font-size: 2.0rem;
+	line-height: 140%;
+	font-weight: 700;
+	margin: 20px auto 20px auto;
+	padding: 0 0 15px 0;
+	border-bottom: #ccc 1px solid;
+	width: 90%;
+	text-align: center;
+}
+
+.iframe h1 span {
+	font-weight: 400;
+	color: #999;
+}
+
+.iframe iframe {
+	width: 100%;
+	margin: 0 auto 20px auto;
+	height: 600px;
+}
+
 .list h1 {
 	font-size: 2.6rem;
 	font-weight: 700;
@@ -195,6 +217,46 @@ code {
 	overflow: auto;
 }
 
+code::selection {
+	background: #730099 !important;
+
+}
+
+code::-moz-selection {
+	background: #730099 !important;
+
+}
+
+code::-webkit-selection {
+	background: #730099 !important;
+
+}
+
+.half code {
+	width: 60%;
+	margin: 20px 0px 20px 80px;
+	float: left;
+}
+
+.test_list {
+	width: 18%;
+	margin: 35px 80px 0 0;
+	padding: 20px 10px;
+	min-height: 420px;
+	border-radius: 10px;
+	border: #eee 1px solid;
+	display: block;
+	background: #86b5d5;
+	color: #0069b1;
+	float: right;
+}
+
+.test_list li {
+	font-size: 1.2rem;
+	list-style-type: circle;
+	margin: 0 0 10px 20px;
+}
+
 .code h1,
 .code p {
 	margin: 0 auto;
@@ -212,7 +274,9 @@ code {
 	line-height: 140%;
 }
 
+
 .run {
+	clear: both;
 	margin: 0 auto;
 	width: 87%;
 }
@@ -233,6 +297,7 @@ code {
 	font-size: 1.4rem;
 	line-height: 140%;
 	margin-left: 150px;
+	border-radius: 10px;
 }
 
 .log span {
