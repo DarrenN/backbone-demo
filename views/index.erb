@@ -9,10 +9,14 @@
 
   <div id="content">
     <h1 id="header">Arc90 University | Backbone 101</h1>
+
+    <!-- Search form -->
     <form id="search-form" action="/search" method="get" accept-charset="utf-8">
        <input type="search" name="search" id="search" placeholder="Search photos by title">
        <input type="submit" name="search_submit" id="search-submit" value="Search">
     </form>
+
+    <!-- Photo container -->
     <div id="photos"></div>
   </div>
 
@@ -20,10 +24,11 @@
   <script src="/js/lib/underscore-min.js"></script>
   <script src="/js/lib/backbone-min.js"></script>
   <script src="/js/app.js"></script>
-  <script>  
-     $(function(){
-        Statigram.init(<%= @photos %>);
-     });
+  <script>
+    // We bootstrap the application with a JSON represenation of the DB rows.
+    $(function(){
+      Statigram.init(<%= @photos %>);
+    });
   </script>
 
   <!-- Photo Template -->
