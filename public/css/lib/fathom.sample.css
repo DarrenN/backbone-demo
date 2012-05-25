@@ -234,13 +234,13 @@ code::-webkit-selection {
 }
 
 .half code {
-	width: 60%;
+	width: 55%;
 	margin: 20px 0px 20px 80px;
 	float: left;
 }
 
 .test_list {
-	width: 18%;
+	width: 16%;
 	margin: 35px 80px 0 0;
 	padding: 20px 10px;
 	min-height: 420px;
