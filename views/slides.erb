@@ -50,7 +50,7 @@
             We're going to look at a simple photo app backed by a local server &amp; DB.<br />
             <span>Fork it on GitHub: <a href="https://github.com/DarrenN/backbone-demo">https://github.com/DarrenN/backbone-demo</a><span>
         </h1>
-        <iframe src="http://127.0.0.1:4567"></iframe>
+        <iframe src="/"></iframe>
     </div>
 
     <div class="slide breaker">
@@ -92,7 +92,7 @@ var Statigram = {};
 Statigram.Photo = Backbone.Model.extend({
 
     // Set a base URL for the model to hit. Backbone will create the url:
-    // Request: GET http://127.0.0.1:4567/photo/1
+    // Request: GET /photo/1
     urlRoot : 'photo',
 
     initialize : function() {
