@@ -31,3 +31,5 @@ And then point your browser to `http://127.0.0.1:4567`
 ### View the interactive slide deck
 
 Point your browser to `http://127.0.0.1:4567/slides`
+
+Or you can view them on Heroku - http://furious-sunset-1319.herokuapp.com/slides
