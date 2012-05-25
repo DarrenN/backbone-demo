@@ -1,7 +1,9 @@
 require "sinatra"
 require "sinatra/reloader" if development?
 require "json"
-require "sqlite3"
+require "sequel"
+require "pg"
+require_relative "connection.rb"
 
 # Simple JSON app for Backbone Demo.
 #
@@ -13,8 +15,8 @@ require "sqlite3"
 # Everything in JSON, it's what Backbone craves.
 # Oh, and hook up the DB.
 before do
-	@db = SQLite3::Database.new "./db/test.db"
-	@db.results_as_hash = true
+	@db = Sequel.postgres(:host=>$pg[:host], :database=>$pg[:database], :user=>$pg[:username], :password=>$pg[:password], :sslmode => 'require')
+	@ds = @db[:photos]
 	content_type 'application/json'
 end
 
@@ -22,7 +24,7 @@ end
 # We serve index.rb from a few routes, so make it a method
 def serve_index
 	content_type 'text/html' # this is not JSON.
-	@photos = @db.execute2( "select * from photos" ).drop(1).to_json
+	@photos = @ds.order(:title).all.to_json
 	erb :index
 end
 
@@ -48,12 +50,12 @@ end
 
 # Send the whole shebang down
 get '/photos' do
-	@photos = @db.execute2( "select * from photos" ).drop(1).to_json
+	@photos = @db[:photos].order(:title).all.to_json
 end
 
 # Returns single photo
 get '/photo/:id' do 
-	row = @db.execute2("select * from photos where id=?", params[:id]).drop(1)
+	row = @ds.filter(:id => params[:id]).first.to_json
 	if row.empty?
 		halt 500, {:response => 'fail'}.to_json
 	end
@@ -62,7 +64,7 @@ end
 
 # Create a photo
 post '/photo' do
-	unless (@db.execute2("insert into photos (link, statigram, title) values (?, ?, ?, ?)", params.values))
+	unless (@ds.insert([:link, :statigram, :title], params.values))
 		halt 500, {:response => 'fail - could not save'}.to_json
 	end
 	{:response => 'success'}.to_json
@@ -71,13 +73,14 @@ end
 # Update a photo with the new stuff. Stupidity ensues.
 put '/photo/:id' do
 	resp = JSON.parse(request.body.read)
-	data  = @db.execute2("select * from photos where id=?", params[:id]).drop(1)[0].merge(resp) # < I'm with stupid!
-	unless (@db.execute2("update photos set link = ?, statigram = ?, title = ?, comment = ? where id = ?", 
-		data['link'],
-		data['statigram'],
-		data['title'],
-		data['comment'],
-		data['id']).count > 0)
+	data = @ds.filter(:id => params[:id]).first.merge(resp) # < I'm with stupid!
+	puts data
+	unless (@ds.filter(:id => params[:id]).update(
+		:link => data['link'],
+		:statigram => data['statigram'],
+		:title => data['title'],
+		:comment => data['comment'],
+		))
 		halt 500, {:response => 'fail - could not save'}.to_json
 	end
 	{:response => 'success'}.to_json
@@ -85,7 +88,7 @@ end
 
 # Delete record
 delete '/photo/:id' do
-	@db.execute2("delete from photos where id = ?", params[:id])
+	@ds.filter(:id => params[:id]).delete
 	{:response => 'success'}.to_json
 end
 

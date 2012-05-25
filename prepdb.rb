@@ -1,26 +1,19 @@
-require "sqlite3"
+require "sequel"
 require "json"
+require_relative "connection.rb"
 
-db = SQLite3::Database.new "./db/test.db"
+db = Sequel.postgres(:host=>$pg[:host], :database=>$pg[:database], :user=>$pg[:username], :password=>$pg[:password], :sslmode => 'require')
 
-rows = db.execute <<-SQL
-  drop table photos;
-SQL
-
-rows = db.execute <<-SQL
-  create table photos (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    link text,
-    statigram text,
-    title varchar(255),
-    comment text
-  );
-SQL
+db.create_table!(:photos) do
+    primary_key :id
+    String :link, :text => true
+    String :statigram, :text => true
+    String :title
+    String :comment, :text => true
+end
 
 data = JSON.parse(File.read('public/data/mecha.json'))
 
-stmt = db.prepare "insert into photos (link, statigram, title, id) values ( ?, ?, ?, ? )"
 data.each do |d|
-  puts d.inspect
-  stmt.execute d.values
+  db[:photos].insert([:link, :statigram, :title], d.values)
 end
