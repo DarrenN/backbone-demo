@@ -63,7 +63,7 @@ get '/photo/:id' do
 	if row.empty?
 		halt 500, {:response => 'fail'}.to_json
 	end
-	row[0].to_json
+	row.to_json
 end
 
 # Create a photo
