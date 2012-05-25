@@ -1,8 +1,7 @@
 require "sequel"
 require "json"
-require_relative "connection.rb"
 
-db = Sequel.postgres(:host=>$pg[:host], :database=>$pg[:database], :user=>$pg[:username], :password=>$pg[:password], :sslmode => 'require')
+db = Sequel.connect(ENV['PG']);
 
 db.create_table!(:photos) do
     primary_key :id
