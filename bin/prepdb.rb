@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require "sequel"
 require "json"
 
@@ -11,7 +12,7 @@ db.create_table!(:photos) do
     String :comment, :text => true
 end
 
-data = JSON.parse(File.read('public/data/mecha.json'))
+data = JSON.parse(File.read('../public/data/mecha.json'))
 
 data.each do |d|
   db[:photos].insert([:link, :statigram, :title], d.values)
