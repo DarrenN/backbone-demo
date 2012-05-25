@@ -81,11 +81,11 @@ div.slide {
 	background-clip: padding-box;
 	background: #eee;
 	display: inline-block;
-	height: 768px;
+	height: 728px;
 	padding: 20px;
 	position: relative;
 	vertical-align: top;
-	width: 1280px;
+	width: 1024px;
 }
 	div.inactiveslide {
 		opacity: 0.4;
@@ -170,7 +170,7 @@ em {
 .iframe iframe {
 	width: 100%;
 	margin: 0 auto 20px auto;
-	height: 600px;
+	height: 500px;
 }
 
 .list h1 {
