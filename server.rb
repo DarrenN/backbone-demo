@@ -3,7 +3,7 @@ require "sinatra/reloader" if development?
 require "json"
 require "sequel"
 require "pg"
-require_relative "connection.rb"
+require_relative "connection.rb" if development?
 
 # Simple JSON app for Backbone Demo.
 #
@@ -15,7 +15,11 @@ require_relative "connection.rb"
 # Everything in JSON, it's what Backbone craves.
 # Oh, and hook up the DB.
 before do
-	@db = Sequel.postgres(:host=>$pg[:host], :database=>$pg[:database], :user=>$pg[:username], :password=>$pg[:password], :sslmode => 'require')
+	if ENV['PG']
+		@db = Sequel.connect(ENV['PG']);
+	else
+		@db = Sequel.postgres(:host=>$pg[:host], :database=>$pg[:database], :user=>$pg[:username], :password=>$pg[:password], :sslmode => 'require')
+	end
 	@ds = @db[:photos]
 	content_type 'application/json'
 end
