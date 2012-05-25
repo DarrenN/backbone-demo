@@ -1,5 +1,6 @@
 require "sinatra"
 require "sinatra/reloader" if development?
+require "sinatra/json"
 require "json"
 require "sequel"
 require "pg"
@@ -63,7 +64,7 @@ get '/photo/:id' do
 	if row.empty?
 		halt 500, {:response => 'fail'}.to_json
 	end
-	row.to_json
+	json row
 end
 
 # Create a photo
