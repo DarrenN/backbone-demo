@@ -33,3 +33,7 @@ And then point your browser to `http://127.0.0.1:4567`
 Point your browser to `http://127.0.0.1:4567/slides`
 
 Or you can view them on Heroku - http://furious-sunset-1319.herokuapp.com/slides
+
+### Why you make this?
+
+I needed to demo basic Backbone.js features for my co-workers at http://arc90.com: http://darrenknewton.com/2012/06/24/backbonejs-and-you/
