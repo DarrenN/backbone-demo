@@ -36,4 +36,13 @@ Or you can view them on Heroku - http://arcane-refuge-8744.herokuapp.com/slides
 
 ### Why you make this?
 
-I needed to demo basic Backbone.js features for my co-workers at http://arc90.com: http://darrenknewton.com/2012/06/24/backbonejs-and-you/
+I needed to demo basic Backbone.js features for my co-workers at
+http://arc90.com:
+http://darrenknewton.com/2012/06/24/backbonejs-and-you/
+
+### Note!
+
+This project was originally made using images from Instagram (via the
+Statigram API). Afterwards I quite Instagram over their changes in
+licensing after the Facebook acquisition. The photos now in use are
+very low resolution Flickr images.
