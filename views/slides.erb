@@ -15,7 +15,7 @@
 <body>
 
 <div id="presentation">
-    
+
     <div id="title" class="slide">
         <div>
             <img src="/img/backbone-300x300.png" alt="">
@@ -212,11 +212,11 @@ photos.fetch({
             photos.get(3).get('title'),
 
             // Get models that meet a criteria and return array
-            photos.where({title : 'Galaxy California'})[0].get('title'), 
-            
+            photos.where({title : 'Kawaii'})[0].get('title'),
+
             // Pop - pop last model off stack and return it
             photos.pop().get('title')
-            ]);  
+            ]);
     }
 });
             </code>
@@ -236,7 +236,7 @@ Statigram.PhotoView = Backbone.View.extend({
     render    : function() {
         // The view generates `this.el` out of the tagName & className to make:
         // &lt;li class="photo_view"&gt;&lt;/li&gt;
-        // 
+        //
         // $el - this is `this.el` wrapped in jQuery
         this.$el.html('A list element of stirling reputation.');
         log(this.el);
@@ -287,9 +287,9 @@ photos.fetch(); // Load models from server and render
             <code class="javascript">
 var Statigram = {};
 Statigram.Photo = Backbone.Model.extend({
-    initialize : function() { 
-        this.view = new Statigram.PhotoView({ model : this, id : this.id }); 
-        this.view.render(); 
+    initialize : function() {
+        this.view = new Statigram.PhotoView({ model : this, id : this.id });
+        this.view.render();
     }
 });
 Statigram.Photos = Backbone.Collection.extend({ url : '/photos', model : Statigram.Photo });
@@ -300,9 +300,9 @@ Statigram.PhotoView = Backbone.View.extend({
     events    : {
         "click" : "red"
     },
-    red : function(e) { 
+    red : function(e) {
         this.$el.css({ color : '#f00' });
-        log(" ID:" + this.$el.attr('id')); 
+        log(" ID:" + this.$el.attr('id'));
     }
 });
 photos = new Statigram.Photos();
@@ -328,8 +328,8 @@ photos.fetch(); // Load models from server and render
 
         // Add some noise to the background
         $('body').noisy({
-            intensity: 1, 
-            size: 200, 
+            intensity: 1,
+            size: 200,
             opacity: 0.08,
             monochrome: false
         });
@@ -341,7 +341,7 @@ photos.fetch(); // Load models from server and render
             var code = $(this).find('code');
             var button = '<div class="run" title="Run"><button>Run Code</button><div id="log' + x + '" class="log"></div></div>';
             $(button).insertAfter($(this)).bind('click', function(){
-              eval(code.text());    
+              eval(code.text());
             });
             x++;
         });
