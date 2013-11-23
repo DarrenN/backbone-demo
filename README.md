@@ -43,6 +43,6 @@ http://darrenknewton.com/2012/06/24/backbonejs-and-you/
 ### Note!
 
 This project was originally made using images from Instagram (via the
-Statigram API). Afterwards I quite Instagram over their changes in
+Statigram API). Afterwards I quit Instagram over their changes in
 licensing after the Facebook acquisition. The photos now in use are
 very low resolution Flickr images.
