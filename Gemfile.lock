@@ -4,7 +4,7 @@ GEM
     backports (2.5.1)
     daemons (1.1.8)
     eventmachine (0.12.10)
-    rack (1.4.1)
+    rack (1.6.11)
     rack-protection (1.2.0)
       rack
     rack-test (0.6.1)
